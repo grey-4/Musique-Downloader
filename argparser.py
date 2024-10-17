@@ -9,21 +9,7 @@ import spotipy
 import re
 from dotenv import load_dotenv
 
-uname = os.getlogin()
 
-print('''
-                                                                                                                                                                                                                                 
-88b           d88                          88                                                  88888888ba,                                                  88                                    88                             
-888b         d888                          ""                                                  88      `"8b                                                 88                                    88                             
-88`8b       d8'88                                                                              88        `8b                                                88                                    88                             
-88 `8b     d8' 88  88       88  ,adPPYba,  88   ,adPPYb,d8  88       88   ,adPPYba,            88         88   ,adPPYba,   8b      db      d8  8b,dPPYba,   88   ,adPPYba,   ,adPPYYba,   ,adPPYb,88   ,adPPYba,  8b,dPPYba,     
-88  `8b   d8'  88  88       88  I8[    ""  88  a8"    `Y88  88       88  a8P_____88  aaaaaaaa  88         88  a8"     "8a  `8b    d88b    d8'  88P'   `"8a  88  a8"     "8a  ""     `Y8  a8"    `Y88  a8P_____88  88P'   "Y8     
-88   `8b d8'   88  88       88   `"Y8ba,   88  8b       88  88       88  8PP"""""""  """"""""  88         8P  8b       d8   `8b  d8'`8b  d8'   88       88  88  8b       d8  ,adPPPPP88  8b       88  8PP"""""""  88             
-88    `888'    88  "8a,   ,a88  aa    ]8I  88  "8a    ,d88  "8a,   ,a88  "8b,   ,aa            88      .a8P   "8a,   ,a8"    `8bd8'  `8bd8'    88       88  88  "8a,   ,a8"  88,    ,88  "8a,   ,d88  "8b,   ,aa  88             
-88     `8'     88   `"YbbdP'Y8  `"YbbdP"'  88   `"YbbdP'88   `"YbbdP'Y8   `"Ybbd8"'            88888888Y"'     `"YbbdP"'       YP      YP      88       88  88   `"YbbdP"'   `"8bbdP"Y8   `"8bbdP"Y8   `"Ybbd8"'  88             
-                                                        88                                                                                                                                                                       
-                                                        88                                                                                                                                                                       
-''')
 
 def main():
     # Create ArgumentParser object
@@ -40,7 +26,7 @@ def main():
     # Access the input option value
     if args.playlist:
         playlist = args.playlist
-        env_path = "/home/" + uname  + "/Musique-Downloader/spos.env"
+        env_path = "/home/grey/Documents/spos.env"
         load_dotenv(dotenv_path=env_path)
 
         CLIENT_ID = os.getenv("CLIENT_ID", "")
@@ -65,7 +51,8 @@ def main():
         playlist_name = playlist_details["name"]
 
         #making a new directory to store songs 
-        parent_path = "/home/" + uname + "/Music/"
+        username = os.getlogin()
+        parent_path = "/home/" + username + "/Music/"
         path = os.path.join(parent_path,playlist_name)
         if os.path.exists(path):
             print("Directory already exists! Making it the download path...")
@@ -106,7 +93,7 @@ def main():
         count = 1
 
         #import the csv file with songs and artists name 
-        with open('/home/'+uname+'/Musique-Downloader/track_info.csv',newline='') as f:
+        with open('/home/prakash/Spoffline/track_info.csv',newline='') as f:
             reader = csv.reader(f)
             data = list(reader)
 
@@ -205,7 +192,7 @@ def main():
 
             if audio_stream:
             # Download the audio
-                audio_path = audio_stream.download(output_path="/home/" + uname + "/Music/")
+                audio_path = audio_stream.download(output_path="/home/"+ username +"/Music/")
 
             # Convert the audio from MP4 to MP3
                 audio_path_mp3 = audio_path.replace(".mp4", ".mp3")
@@ -225,5 +212,4 @@ def main():
         except Exception as e:
             print("An error occurred:", e)
 
-if __name__ == "__main__":
-    main()
+main()
